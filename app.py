@@ -74,7 +74,7 @@ def insert_random():
         db.session.add(new_blog)
     db.session.commit()
     end = time.time()
-    return 'Inserted ' + times + ' random blogs! Time taken: ' + str(end - start)
+    return 'Inserted ' + str(times) + ' random blogs! Time taken: ' + str(end - start)
 
 # 创建博客
 @app.route('/blogs', methods=['POST'])
