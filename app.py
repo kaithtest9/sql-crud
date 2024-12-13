@@ -45,9 +45,9 @@ def get_all_env():
 @app.route('/')
 def home():
     start = time.time()
-    blogs = Blog.query.all()
+    blogs = Blog.query.order_by(Blog.id.desc()).all()
     blogs_html = "".join(
-        f"<h3>{blog.title}</h3><p>{blog.content}</p><hr>" for blog in blogs
+        f"<a href='/blogs/{blog.id}'>{blog.title}</a><br>{blog.content}<br><br>" for blog in blogs
     )
     end = time.time()
     form_html = '''
@@ -56,7 +56,7 @@ def home():
             <input type="text" id="title" name="title" required><br>
             <label for="content">Content:</label><br>
             <textarea id="content" name="content" required></textarea><br>
-            <button type="submit">Add Blog</button>
+            <button type="submit">Create</button>
         </form>
         <hr>
     '''
@@ -108,7 +108,7 @@ def get_blog(blog_id):
     if not blog:
         return jsonify({'error': 'Blog not found!'}), 404
     end = time.time()
-    return jsonify({'blog': blog.to_dict(), 'time_taken': end - start}), 200
+    return "<a href='/'>Back</a><br><br>" + f"<h1>{blog.title}</h1><p>{blog.content}</p><p>Time taken: {end - start:.6f} seconds</p>"
 
 # 更新博客
 @app.route('/blogs/<int:blog_id>', methods=['PUT'])
