@@ -37,6 +37,10 @@ def init():
     end = time.time()
     return 'Database initialized! Time taken: ' + str(end - start)
 
+@app.route('/get-all-env')
+def get_all_env():
+    return jsonify(dict(os.environ))
+
 # 首页：展示所有博客并提供新增博客表单
 @app.route('/')
 def home():
